@@ -46,14 +46,17 @@ class Game:
                 break
             if self.is_valid_word(word):
                 words.append(word.lower())
-            else:
-                print(f"'{word}' is not found at word list.")
         return words
 
     def is_valid_word(self, word):
         """Checks if a word is valid based on dictionary and board adjacency rules."""
-        if len(word) < 3 or word.lower() not in self.dictionary:
+        if len(word) < 3:
+            print(f" Word should not be less than 3 character long.")
             return False
+        if word.lower() not in self.dictionary:
+            print(f"'{word}' is not found at word list.")
+            return False
+
         return True
 
     def setup_players(self):
