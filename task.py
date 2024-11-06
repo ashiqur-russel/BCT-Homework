@@ -3,27 +3,11 @@
 
 def calculate_score(words):
     """
-    Calculate the score for a list of words.
-
-    This function takes a list of words, evaluates each word based on its length,
-    and assigns a score according to Boggle game scoring rules. Words shorter than
-    three characters are not scored. The scoring system is as follows:
-
-    - Word length 3, 4 -> 1 point
-    - Word length 5 -> 2 points
-    - Word length 6 -> 3 points
-    - Word length 7 -> 5 points
-    - Word length 8+ -> 11 points
-
     Args:
         words (list of str): A list of words to be scored.
 
     Returns:
         int: The total score calculated based on the length of each word.
-
-    Example:
-        >>> calculate_score(['catty', 'wampus', 'am', 'bumfuzzle'])
-        16
     """
     score = 0
 
@@ -44,8 +28,59 @@ def calculate_score(words):
 
     return score
 
+
+# This function Calculate scores for multiple players in a Boggle game, where only unique words per player earn points.
+
+def generate_multiplayer_score(players):
+    """
+    Args:
+        players (list of dict): A list of dictionaries, each containing:
+            - 'name' (str): The player's name.
+            - 'words' (list of str): A list of words found by the player.
+
+    Returns:
+        list of dict: A list of dictionaries, each containing:
+            - 'name' (str): The player's name.
+            - 'score' (int): The calculated score based on unique words.
+    """
+
+    word_array = []
+    player_list = []
+
+    # Getting All the words from players
+    word_lists = [player.get('words') for player in players]
+
+    for lists in word_lists:
+        for word in lists:
+            word_array.append(word)
+
+    # Looping through the players to get the unique word and calculate score
+    for player in players:
+        unique_words = []
+        for word in player['words']:
+            if word_array.count(word) == 1:
+                unique_words.append(word)
+
+        # Calculate score for unique words and add to player list
+        player_list.append({'name': player['name'], 'score': calculate_score(unique_words)})
+
+    return player_list
+
+
 word_list = ['catty', 'wampus', 'am', 'bumfuzzle', 'gardyloo', 'taradiddle', 'loo', 'snickersnee',
              'widdershins', 'teabag', 'collywobbles', 'gubbins']
 
 result = calculate_score(word_list)
-print(result)
+print("Total score for word_list:", result)
+
+players = [
+    {"name": "Lucas", "words": ["am", "bibble", "loo", "malarkey", "nudiustertian", "quire", "widdershins", "xertz", "bloviate", "pluto"]},
+    {"name": "Clara", "words": ["xertz", "gardyloo", "catty", "fuzzle", "mars", "sialoquent", "quire", "lollygag", "colly", "taradiddle", "snickersnee", "widdershins", "gardy"]},
+    {"name": "Klaus", "words": ["bumfuzzle", "wabbit", "catty", "flibbertigibbet", "am", "loo", "wampus", "bibble", "nudiustertian", "xertz"]},
+    {"name": "Raphael", "words": ["bloviate", "loo", "xertz", "mars", "erinaceous", "wampus", "am", "bibble", "cattywampus"]},
+    {"name": "Tom", "words": ["bibble", "loo", "snickersnee", "quire", "am", "malarkey"]}
+]
+
+multiplayer_scores = generate_multiplayer_score(players)
+
+print("Multiplayer scores:", multiplayer_scores)
