@@ -28,6 +28,27 @@ class Game:
 
         print()
 
+    def get_player_words(self, player_name):
+        """Collects valid words from a player."""
+        words = []
+        print(f"{player_name}, enter your words. Type 'STOP' to finish.")
+        while True:
+            word = input("Word: ").strip().upper()
+            if word == 'STOP':
+                break
+            else:
+                words.append(word.lower())
+        return words
+
+    def setup_players(self):
+        num_players = int(input("Enter number of players: "))
+        for i in range(num_players):
+            player_name = input(f"Enter name for player {i + 1}: ")
+            words = self.get_player_words(player_name)
+            self.players.append({"name": player_name, "words": words})
+
     def play(self):
         self.display_board()
+        self.setup_players()
+
 
