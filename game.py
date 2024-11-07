@@ -2,7 +2,7 @@ import sys
 import os
 import random
 import string
-from task import calculate_score, generate_multiplayer_score
+from task import generate_multiplayer_score
 
 BOARD_SIZE = 4
 

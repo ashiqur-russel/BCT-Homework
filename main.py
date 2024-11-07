@@ -1,4 +1,3 @@
-from task import calculate_score, generate_multiplayer_score
 from game import Game
 
 def main():
