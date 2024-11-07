@@ -46,10 +46,15 @@ class Game:
         print(f"{player_name}, enter your words. Type 'STOP' to finish.")
         while True:
             word = input("Word: ").strip().upper()
+            if word.lower() in words:
+                print('You have already used the word!')
+                continue
             if word == 'STOP':
                 break
             if self.is_valid_word(word):
                 words.append(word.lower())
+            else:
+                print('You can not move backward!')
         return words
 
     def is_valid_word(self, word):
@@ -61,14 +66,42 @@ class Game:
             print(f"'{word}' is not found at word list.")
             return False
 
-        return True
+        return self.is_adjacent_word(word.upper())
+
+    def is_adjacent_word(self, word):
+        def dfs(x, y, word, visited):
+            if len(word) == 0:
+                return True
+
+            # Boundary check and letter match check
+            if (x < 0 or x >= 4 or y < 0 or y >= 4 or
+                    (x, y) in visited or
+                    self.board[x][y] != word[0]):
+                return False
+
+            visited.add((x, y))
+
+            # moving all 8 directions (vertical, horizontal, and diagonal) to check
+            for dx, dy in [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]:
+                if dfs(x + dx, y + dy, word[1:], visited):
+                    return True
+
+            visited.remove((x, y))
+            return False
+
+        # Try to find the word starting from each cell on the board
+        for i in range(4):
+            for j in range(4):
+                if self.board[i][j] == word[0] and dfs(i, j, word, set()):
+                    return True
+        return False
 
     def setup_players(self):
         while True:
             try:
                 num_players = int(input("Enter number of players: "))
-                if num_players <= 0:
-                    print("Please enter a positive number.")
+                if num_players < 2:
+                    print("Minimum 2 players required!")
                     continue
                 break
             except ValueError:
