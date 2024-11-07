@@ -193,6 +193,35 @@ Generates a random 4x4 Boggle board filled with uppercase letters A-Z.
     print(game.is_valid_word("a"))     # Output: False
     ```
     
+### `is_adjacent_word(word)`
+
+This method checks if a given word can be formed on the Boggle board by traversing adjacent cells. The function uses Depth-First Search (DFS) to explore all possible paths from each cell on the board, ensuring each letter in the word can be reached from the previous letter through adjacency rules (horizontal, vertical, or diagonal). Each letter cell can only be used once in a single word path.
+
+- **Source**: Adapted from the approach discussed in [Solving Boggle using Depth-First Searches and Prefix Trees](https://medium.com/@ashalabi13/solving-boggle-using-depth-first-searches-and-prefix-trees-9c3faa89ea99) and [DFS in Python](https://favtutor.com/blogs/depth-first-search-python).
+
+#### Parameters:
+- **`word`** (str): The word to be validated against the board.
+
+#### Returns:
+- **`bool`**: `True` if the word can be formed on the board by adjacent cells, `False` otherwise.
+
+#### Example:
+
+```python
+game = Game()
+game.board = [
+    ['F', 'W', 'C', 'K'],
+    ['R', 'H', 'E', 'A'],
+    ['X', 'V', 'L', 'O'],
+    ['A', 'G', 'L', 'S']
+]
+
+word = "HELLO"
+is_found = game.is_adjacent_word(word)
+print(is_found)  # Output: True
+
+```
+
 - **`setup_players()`**: Prompts the user for the number of players and their names. Calls `get_player_words()` to collect each player’s words.
   - **Example**:
     ```python
@@ -235,7 +264,34 @@ Generates a random 4x4 Boggle board filled with uppercase letters A-Z.
 
 ## How to Run the Game
 
+## Prerequisites
+
+To run or check the Boggle game, ensure you have the following installed:
+
+- **Python 3.7 or higher**
+- **IDE (Integrated Development Environment)**
+
+
 ### Run the Game
+
+### 1. Download the Project
+
+You can either download the ZIP file or clone the Git repository.
+
+- **Option A: Unzip the Folder**
+  1. Download the ZIP file of this project.
+  2. Extract (unzip) the contents to a folder on your computer.
+
+- **Option B: Clone the Git Repository**
+  1. Open a terminal or command prompt.
+  2. Run the following command to clone the repository:
+     ```bash
+     git clone https://github.com/ashiqur-russel/BCT-Homework.git
+     ```
+  3. Navigate into the cloned folder:
+     ```bash
+     cd BCT-Homework
+     ```
 
 To start the game, execute the `main.py` file.
 
