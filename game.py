@@ -1,3 +1,5 @@
+import sys
+import os
 import random
 import string
 from task import calculate_score, generate_multiplayer_score
@@ -8,7 +10,7 @@ class Game:
     def __init__(self):
         self.board = self.create_board()
         self.players = []
-        self.dictionary = self.load_dictionary('wordlist-english.txt')
+        self.dictionary = self.load_dictionary()
 
 
     @staticmethod
@@ -21,13 +23,16 @@ class Game:
         return board
 
     @staticmethod
-    def load_dictionary(filepath):
+    def load_dictionary():
         """
         Loads dictionary words from a file for word validation.
         This implementation was adapted based on the method described in the article:
         "How to Read a Dictionary from a File" on Finxter (https://blog.finxter.com/how-to-read-a-dictionary-from-a-file/)
         """
-        with open(filepath) as f:
+        base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+        filename = os.path.join(base_path, "wordlist-english.txt")
+
+        with open(filename) as f:
             return set(word.strip().lower() for word in f)
 
     def display_board(self):
@@ -53,8 +58,6 @@ class Game:
                 break
             if self.is_valid_word(word):
                 words.append(word.lower())
-            else:
-                print('You can not move backward!')
         return words
 
     def is_valid_word(self, word):
@@ -63,10 +66,14 @@ class Game:
             print(f" Word should not be less than 3 character long.")
             return False
         if word.lower() not in self.dictionary:
-            print(f"'{word}' is not found at word list.")
+            print(f"'{word}' is not found in word list.")
             return False
 
-        return self.is_adjacent_word(word.upper())
+        if self.is_adjacent_word(word.upper()):
+            return True
+
+        print('Word not found at board!')
+        return False
 
     def is_adjacent_word(self, word):
         def dfs(x, y, word, visited):
