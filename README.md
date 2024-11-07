@@ -88,15 +88,6 @@ print(multiplayer_scores)
 ```
 
 
-### Explanation:
-
-1. **Parameters Section**: Describes the structure of the `players` list, which contains dictionaries with each player's name and their word list.
-2. **Returns Section**: Specifies that the function returns a list of dictionaries with each player’s name and calculated score.
-3. **Example Code Block**: Provides an example of how to use `generate_multiplayer_score`, showing input players and the expected output.
-
-This Markdown section provides a complete explanation of the `generate_multiplayer_score` function, including a sample input and output to help clarify usage.
-
-
 ## Task 2: Boggle Game Implementation (game.py)
 
 This file contains the `Game` class, which encapsulates the logic for a playable Boggle game. It includes board generation, player setup, word validation, and score calculation.
