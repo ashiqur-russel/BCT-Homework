@@ -46,6 +46,9 @@ class Game:
         print(f"{player_name}, enter your words. Type 'STOP' to finish.")
         while True:
             word = input("Word: ").strip().upper()
+            if word.lower() in words:
+                print('You have already used the word!')
+                continue
             if word == 'STOP':
                 break
             if self.is_valid_word(word):
@@ -77,6 +80,7 @@ class Game:
         for i in range(num_players):
             player_name = input(f"Enter name for player {i + 1}: ")
             words = self.get_player_words(player_name)
+            print(words)
             self.players.append({"name": player_name, "words": words})
 
     def calculate_scores(self):
