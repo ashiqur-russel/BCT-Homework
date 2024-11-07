@@ -22,7 +22,11 @@ class Game:
 
     @staticmethod
     def load_dictionary(filepath):
-        """Loads dictionary words from a file for word validation."""
+        """
+        Loads dictionary words from a file for word validation.
+        This implementation was adapted based on the method described in the article:
+        "How to Read a Dictionary from a File" on Finxter (https://blog.finxter.com/how-to-read-a-dictionary-from-a-file/)
+        """
         with open(filepath) as f:
             return set(word.strip().lower() for word in f)
 
